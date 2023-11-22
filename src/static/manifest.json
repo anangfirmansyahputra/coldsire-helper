@@ -1,26 +1,33 @@
 {
     "manifest_version": 3,
-    "name": "react-boilerplate",
+    "name": "ClodSire Helper",
     "description": "react-boilerplate for chrome extension",
     "version": "1.0.0",
     "action" : {
         "default_popup": "popup.html",
-        "default_title": "React Boilerplate",
-        "default_icon" : "icon.png"
+        "default_title": "Clodsire Helper",
+        "default_icon" : "favicon-3.png"
     },
     "chrome_url_overrides": {
-        "newtab": "newTab.html"
+        "newtab": "newTab.html",
+        "select": "select.html"
     },
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+      ],
     "permissions": [
         "tabs",
         "bookmarks",
         "storage",
-        "identity"
+        "identity",
+        "cookies",
+        "scripting"
     ],
     "icons": {
-        "16" : "icon.png",
-        "48" : "icon.png",
-        "128" : "icon.png"
+        "16" : "favicon-1.png",
+        "48" : "favicon-2.png",
+        "128" : "favicon-3.png"
     },
     "options_page": "options.html",
     "background": {
