@@ -1,37 +1,38 @@
-/******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
+window.onload = async (event) => {
+  const targetElement = document.getElementsByClassName("connect-box-grid")[0];
+  const cardContainer = document.createElement("div");
 
-/***/ "./src/contentScript/contentScript.ts":
-/*!********************************************!*\
-  !*** ./src/contentScript/contentScript.ts ***!
-  \********************************************/
-/***/ (function() {
+  chrome.runtime.sendMessage(
+    { action: "getCookies", url: "https://www.coldsire.com/" },
+    (cookies) => {
+      const login = cookies?.find(
+        (cookie: any) => cookie.name === "__Secure-next-auth.session-token"
+      )
+        ? true
+        : false;
+    }
+  );
 
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
-    const targetElement = document.getElementsByClassName("connect-box-grid")[0];
-    const cardContainer = document.createElement("div");
-    chrome.runtime.sendMessage({ action: "getCookies", url: "https://www.coldsire.com/" }, (cookies) => {
-        const login = (cookies === null || cookies === void 0 ? void 0 : cookies.find((cookie) => cookie.name === "__Secure-next-auth.session-token"))
-            ? true
-            : false;
-    });
-    if (targetElement) {
-        const accountCard = document.createElement("div");
-        accountCard.classList.add("add-account-card", "new-button");
-        cardContainer.setAttribute("data-v-6eaf4c12", "");
-        cardContainer.classList.add("q-item", "q-item-type", "row,no-wrap", "q-item--clickable", "q-link", "cursor-pointer", "q-focusable", "q-hoverable", "email-connect-card");
-        const divHelper = document.createElement("div");
-        divHelper.classList.add("q-focus-helper");
-        cardContainer.innerHTML = `<svg
+  if (targetElement) {
+    const accountCard = document.createElement("div");
+    accountCard.classList.add("add-account-card", "new-button");
+
+    cardContainer.setAttribute("data-v-6eaf4c12", "");
+    cardContainer.classList.add(
+      "q-item",
+      "q-item-type",
+      "row,no-wrap",
+      "q-item--clickable",
+      "q-link",
+      "cursor-pointer",
+      "q-focusable",
+      "q-hoverable",
+      "email-connect-card"
+    );
+
+    const divHelper = document.createElement("div");
+    divHelper.classList.add("q-focus-helper");
+    cardContainer.innerHTML = `<svg
         width="140"
         height="74"
         viewBox="0 0 140 24"
@@ -73,32 +74,19 @@ window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
         />
       </svg>
       `;
-        const providerText = document.createElement("p");
-        providerText.classList.add("provider-text");
-        providerText.textContent = "Import from ColdSire";
-        providerText.setAttribute("data-v-6eaf4c12", "");
-        cardContainer.appendChild(divHelper);
-        accountCard.appendChild(cardContainer);
-        accountCard.appendChild(providerText);
-        targetElement.appendChild(accountCard);
-        cardContainer.addEventListener("click", function () {
-            window.location.href = "https://www.coldsire.com/dashboard/link";
-        });
-    }
-});
 
+    const providerText = document.createElement("p");
+    providerText.classList.add("provider-text");
+    providerText.textContent = "Import from ColdSire";
+    providerText.setAttribute("data-v-6eaf4c12", "");
 
-/***/ })
+    cardContainer.appendChild(divHelper);
+    accountCard.appendChild(cardContainer);
+    accountCard.appendChild(providerText);
+    targetElement.appendChild(accountCard);
 
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/contentScript/contentScript.ts"]();
-/******/ 	
-/******/ })()
-;
-//# sourceMappingURL=contentScript.js.map
+    cardContainer.addEventListener("click", function () {
+      window.location.href = "https://www.coldsire.com/dashboard/link";
+    });
+  }
+};
