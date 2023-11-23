@@ -1,1 +1,31 @@
-chrome.runtime.onMessage.addListener(((e,o,t)=>{if("getCookies"===e.action){const{url:o}=e;chrome.cookies.getAll({url:o},(e=>{t(e)}))}return"openPopup"===e.action&&chrome.tabs.create({url:"select.html"}),!0}));
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!**************************************!*\
+  !*** ./src/background/background.ts ***!
+  \**************************************/
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "getCookies") {
+        const { url } = message;
+        chrome.cookies.getAll({ url }, (cookies) => {
+            sendResponse(cookies);
+        });
+    }
+    if (message.action === "openPopup") {
+        chrome.tabs.create({
+            url: "select.html",
+        });
+    }
+    if (message.action === "navigate") {
+        chrome.cookies.set({
+            url: "http://localhost:3001",
+            name: "test",
+            value: "x"
+        });
+        sendResponse(true);
+    }
+    return true;
+});
+
+/******/ })()
+;
+//# sourceMappingURL=background.js.map

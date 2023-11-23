@@ -12,5 +12,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
   }
 
+  if (message.action === "navigate") {
+    chrome.cookies.set({
+      url: "http://localhost:3001",
+      name: "test",
+      value: "x"
+    })
+
+    sendResponse(true)
+  }
+
   return true;
 });

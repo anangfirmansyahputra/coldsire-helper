@@ -3,29 +3,28 @@
     "name": "ClodSire Helper",
     "description": "Clodsire Helper Extension",
     "version": "1.0.0",
-    "action" : {
+    "action": {
         "default_popup": "popup.html",
         "default_title": "Clodsire Helper",
-        "default_icon" : "favicon-3.png"
+        "default_icon": "favicon-3.png"
     },
-    "chrome_url_overrides": {
-    },
+    "chrome_url_overrides": {},
     "host_permissions": [
         "http://*/*",
         "https://*/*"
-      ],
+    ],
     "permissions": [
+        "cookies",
         "tabs",
         "bookmarks",
         "storage",
         "identity",
-        "cookies",
         "scripting"
     ],
     "icons": {
-        "16" : "favicon-1.png",
-        "48" : "favicon-2.png",
-        "128" : "favicon-3.png"
+        "16": "favicon-1.png",
+        "48": "favicon-2.png",
+        "128": "favicon-3.png"
     },
     "options_page": "options.html",
     "background": {
@@ -33,8 +32,12 @@
     },
     "content_scripts": [
         {
-            "matches": ["<all_urls>"],
-            "js": ["contentScript.js"]
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "contentScript.js"
+            ]
         }
     ],
     "content_security_policy": {
