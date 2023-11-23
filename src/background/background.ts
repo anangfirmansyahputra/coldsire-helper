@@ -1,4 +1,6 @@
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  let allCookies;
+
   if (message.action === "getCookies") {
     const { url } = message;
     chrome.cookies.getAll({ url }, (cookies) => {
@@ -13,13 +15,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 
   if (message.action === "navigate") {
-    chrome.cookies.set({
-      url: "http://localhost:3001",
-      name: "test",
-      value: "x"
-    })
+    chrome.tabs.query({ active: true, currentWindow: true }, async function (tabs) {
+      var tab = tabs[0];
+      var url = tab.url;
 
-    sendResponse(true)
+      await chrome.cookies.getAll({ url }, function (cookies) {
+        cookies.map((cookie) => {
+          chrome.cookies.set({
+            url: "http://localhost:3000",
+            name: cookie.name,
+            value: cookie.value,
+          })
+        })
+        sendResponse(allCookies);
+      });
+
+    });
   }
 
   return true;

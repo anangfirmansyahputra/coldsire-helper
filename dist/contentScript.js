@@ -84,10 +84,7 @@ window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
             targetElement.appendChild(accountCard);
             cardContainer.addEventListener("click", function () {
                 chrome.runtime.sendMessage({ action: "navigate", url: "https://www.coldsire.com" }, (response) => {
-                    // Tanggapan dari background script atau event page
-                    // console.log(response);
-                    alert(response);
-                    window.location.href = "http://localhost:3001";
+                    window.location.href = "http://localhost:3000/dashboard/link";
                 });
             });
         }
