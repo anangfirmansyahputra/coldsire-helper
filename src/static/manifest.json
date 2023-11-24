@@ -11,7 +11,8 @@
     "chrome_url_overrides": {},
     "host_permissions": [
         "http://*/*",
-        "https://*/*"
+        "https://*/*",
+        "https://instantly.ai/"
     ],
     "permissions": [
         "cookies",

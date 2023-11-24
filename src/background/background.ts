@@ -23,6 +23,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // chrome.tabs.executeScript(tabs[0].id, { code: 'localStorage.getItem("smartlead")' }, function (result) {
         //   console.log(result[0]);
         // });
+        console.log('smartlead');
+
         chrome.cookies.set({
           url: "http://localhost:3000",
           name: "smartlead",
@@ -39,6 +41,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
               value: cookie.value,
             })
           })
+
+          console.log(cookies);
           sendResponse(allCookies);
         });
       }

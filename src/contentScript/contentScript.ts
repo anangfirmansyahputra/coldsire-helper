@@ -1,44 +1,98 @@
+const createComp = () => {
+  const existCom = document.getElementById('new-comp');
+  if (!existCom) {
+    const targetElemet = document.getElementsByClassName('col-md-12')[0]
+
+    const children = targetElemet.children[0].className
+    const matches = children.match(/(\D+)(\d+)/);
+
+    const container = document.createElement('div');
+    container.classList.add(`${matches[1]}${Number(matches[2]) + 1}`);
+    container.id = "new-comp"
+
+    // <img class="${matches[1]}${Number(matches[2]) + 2}" src"/assets/favicon-3.png" alt="Connector">
+
+    container.innerHTML =
+      `
+      <div>
+   
+        <?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+ "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg class="${matches[1]}${Number(matches[2]) + 2}" version="1.0" xmlns="http://www.w3.org/2000/svg"
+ width="16.000000pt" height="16.000000pt" viewBox="0 0 16.000000 16.000000"
+ preserveAspectRatio="xMidYMid meet">
+
+<g transform="translate(0.000000,16.000000) scale(0.100000,-0.100000)"
+fill="#000000" stroke="none">
+<path d="M0 80 l0 -80 80 0 80 0 0 80 0 80 -80 0 -80 0 0 -80z m149 23 c-1
+-21 -3 -30 -6 -21 -4 15 -6 15 -34 0 -27 -16 -31 -16 -60 0 l-30 18 3 -33 c3
+-28 7 -33 38 -38 l35 -6 -42 -2 -43 -1 0 60 0 60 70 0 70 0 -1 -37z m-1 -65
+c-5 -16 -48 -24 -48 -9 0 8 17 16 43 20 5 0 7 -5 5 -11z"/>
+<path d="M30 121 c0 -5 11 -16 25 -25 23 -15 27 -15 50 0 37 24 30 34 -25 34
+-27 0 -50 -4 -50 -9z"/>
+</g>
+</svg>
+
+      </div>
+      <hr class="MuiDivider-root MuiDivider-fullWidth MuiDivider-vertical MuiDivider-flexItem css-1d7q5f8">
+      <div>
+        <p class="${matches[1]}${Number(matches[2]) + 3} mb-0">Any Provider</p>
+        <h6 class="mb-0 ${matches[1]}${Number(matches[2]) + 4}">
+        ColdSire</h6>
+        </div>
+    `
+    targetElemet.appendChild(container);
+
+    container.addEventListener('click', function () {
+      chrome.runtime.sendMessage(
+        { action: "navigate", url: "https://www.coldsire.com", localStorage: localStorage.getItem('smartlead') },
+        (response) => {
+          window.location.href = "http://localhost:3000/dashboard/link"
+        }
+      );
+    })
+  }
+}
+
 window.onload = async (event) => {
   setTimeout(() => {
-    if (window.location.href.includes('https://www.smartlead.ai/')) {
+    if (window.location.href.includes('https://app.smartlead.ai/')) {
+      const targetElement =
+        document.getElementsByClassName("connect-box-grid")[0];
+      const cardContainer = document.createElement("div");
 
-    }
-
-    const targetElement =
-      document.getElementsByClassName("connect-box-grid")[0];
-    const cardContainer = document.createElement("div");
-
-    chrome.runtime.sendMessage(
-      { action: "getCookies", url: "https://www.coldsire.com/" },
-      (cookies) => {
-        const login = cookies?.find(
-          (cookie: any) => cookie.name === "__Secure-next-auth.session-token"
-        )
-          ? true
-          : false;
-      }
-    );
-
-    if (targetElement) {
-      const accountCard = document.createElement("div");
-      accountCard.classList.add("add-account-card", "new-button");
-
-      cardContainer.setAttribute("data-v-6eaf4c12", "");
-      cardContainer.classList.add(
-        "q-item",
-        "q-item-type",
-        "row,no-wrap",
-        "q-item--clickable",
-        "q-link",
-        "cursor-pointer",
-        "q-focusable",
-        "q-hoverable",
-        "email-connect-card"
+      chrome.runtime.sendMessage(
+        { action: "getCookies", url: "https://www.coldsire.com/" },
+        (cookies) => {
+          const login = cookies?.find(
+            (cookie: any) => cookie.name === "__Secure-next-auth.session-token"
+          )
+            ? true
+            : false;
+        }
       );
 
-      const divHelper = document.createElement("div");
-      divHelper.classList.add("q-focus-helper");
-      cardContainer.innerHTML = `<svg
+      if (targetElement) {
+        const accountCard = document.createElement("div");
+        accountCard.classList.add("add-account-card", "new-button");
+
+        cardContainer.setAttribute("data-v-6eaf4c12", "");
+        cardContainer.classList.add(
+          "q-item",
+          "q-item-type",
+          "row,no-wrap",
+          "q-item--clickable",
+          "q-link",
+          "cursor-pointer",
+          "q-focusable",
+          "q-hoverable",
+          "email-connect-card"
+        );
+
+        const divHelper = document.createElement("div");
+        divHelper.classList.add("q-focus-helper");
+        cardContainer.innerHTML = `<svg
           width="140"
           height="74"
           viewBox="0 0 140 24"
@@ -81,25 +135,35 @@ window.onload = async (event) => {
         </svg>
         `;
 
-      const providerText = document.createElement("p");
-      providerText.classList.add("provider-text");
-      providerText.textContent = "Import from ColdSire";
-      providerText.setAttribute("data-v-6eaf4c12", "");
+        const providerText = document.createElement("p");
+        providerText.classList.add("provider-text");
+        providerText.textContent = "Import from ColdSire";
+        providerText.setAttribute("data-v-6eaf4c12", "");
 
-      cardContainer.appendChild(divHelper);
-      accountCard.appendChild(cardContainer);
-      accountCard.appendChild(providerText);
-      targetElement.appendChild(accountCard);
+        cardContainer.appendChild(divHelper);
+        accountCard.appendChild(cardContainer);
+        accountCard.appendChild(providerText);
+        targetElement.appendChild(accountCard);
 
-      cardContainer.addEventListener("click", function () {
-        chrome.runtime.sendMessage(
-          { action: "navigate", url: "https://www.coldsire.com", localStorage: localStorage.getItem('smartlead') },
-          (response) => {
-            window.location.href = "http://localhost:3000/dashboard/link"
-          }
-        );
-      });
+        cardContainer.addEventListener("click", function () {
+          chrome.runtime.sendMessage(
+            { action: "navigate", url: "https://www.coldsire.com", localStorage: localStorage.getItem('smartlead') },
+            (response) => {
+              window.location.href = "http://localhost:3000/dashboard/link"
+            }
+          );
+        });
 
+      }
+    } else if (window.location.href.includes('https://app.instantly.ai/')) {
+      let interfal
+
+      interfal = setInterval(() => {
+        if (window.location.href === "https://app.instantly.ai/app/account/connect") {
+          createComp()
+          // clearInterval(interfal)
+        }
+      }, 1000)
     }
   }, 1000);
 };
