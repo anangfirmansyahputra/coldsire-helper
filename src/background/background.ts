@@ -20,9 +20,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       var url = tab.url;
 
       if (url === "https://app.smartlead.ai/app/email-accounts") {
-        // chrome.tabs.executeScript(tabs[0].id, { code: 'localStorage.getItem("smartlead")' }, function (result) {
-        //   console.log(result[0]);
-        // });
         console.log('smartlead');
 
         chrome.cookies.set({
@@ -34,15 +31,17 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         sendResponse('smartlead');
       } else {
         await chrome.cookies.getAll({ url }, function (cookies) {
-          cookies.map((cookie) => {
-            chrome.cookies.set({
-              url: "http://localhost:3000",
-              name: cookie.name,
-              value: cookie.value,
-            })
-          })
+          const filterCookies = cookies.find(cookie => cookie.name === '__session')
 
           console.log(cookies);
+          // cookies.map((cookie) => {
+          chrome.cookies.set({
+            url: "http://localhost:3000",
+            name: "instantly",
+            value: filterCookies.value,
+          })
+          // })
+
           sendResponse(allCookies);
         });
       }
