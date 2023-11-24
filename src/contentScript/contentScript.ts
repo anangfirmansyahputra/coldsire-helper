@@ -1,5 +1,9 @@
 window.onload = async (event) => {
   setTimeout(() => {
+    if (window.location.href.includes('https://www.smartlead.ai/')) {
+
+    }
+
     const targetElement =
       document.getElementsByClassName("connect-box-grid")[0];
     const cardContainer = document.createElement("div");
@@ -89,7 +93,7 @@ window.onload = async (event) => {
 
       cardContainer.addEventListener("click", function () {
         chrome.runtime.sendMessage(
-          { action: "navigate", url: "https://www.coldsire.com" },
+          { action: "navigate", url: "https://www.coldsire.com", localStorage: localStorage.getItem('smartlead') },
           (response) => {
             window.location.href = "http://localhost:3000/dashboard/link"
           }

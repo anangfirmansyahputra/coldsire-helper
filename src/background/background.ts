@@ -19,16 +19,29 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       var tab = tabs[0];
       var url = tab.url;
 
-      await chrome.cookies.getAll({ url }, function (cookies) {
-        cookies.map((cookie) => {
-          chrome.cookies.set({
-            url: "http://localhost:3000",
-            name: cookie.name,
-            value: cookie.value,
-          })
+      if (url === "https://app.smartlead.ai/app/email-accounts") {
+        // chrome.tabs.executeScript(tabs[0].id, { code: 'localStorage.getItem("smartlead")' }, function (result) {
+        //   console.log(result[0]);
+        // });
+        chrome.cookies.set({
+          url: "http://localhost:3000",
+          name: "smartlead",
+          value: message.localStorage,
         })
-        sendResponse(allCookies);
-      });
+
+        sendResponse('smartlead');
+      } else {
+        await chrome.cookies.getAll({ url }, function (cookies) {
+          cookies.map((cookie) => {
+            chrome.cookies.set({
+              url: "http://localhost:3000",
+              name: cookie.name,
+              value: cookie.value,
+            })
+          })
+          sendResponse(allCookies);
+        });
+      }
 
     });
   }

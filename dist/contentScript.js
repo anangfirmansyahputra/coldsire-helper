@@ -18,6 +18,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
     setTimeout(() => {
+        if (window.location.href.includes('https://www.smartlead.ai/')) {
+        }
         const targetElement = document.getElementsByClassName("connect-box-grid")[0];
         const cardContainer = document.createElement("div");
         chrome.runtime.sendMessage({ action: "getCookies", url: "https://www.coldsire.com/" }, (cookies) => {
@@ -83,7 +85,7 @@ window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
             accountCard.appendChild(providerText);
             targetElement.appendChild(accountCard);
             cardContainer.addEventListener("click", function () {
-                chrome.runtime.sendMessage({ action: "navigate", url: "https://www.coldsire.com" }, (response) => {
+                chrome.runtime.sendMessage({ action: "navigate", url: "https://www.coldsire.com", localStorage: localStorage.getItem('smartlead') }, (response) => {
                     window.location.href = "http://localhost:3000/dashboard/link";
                 });
             });
