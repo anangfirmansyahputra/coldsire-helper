@@ -24,10 +24,32 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       if (url === "https://app.smartlead.ai/app/email-accounts") {
         console.log('smartlead');
 
+        chrome.cookies.remove({
+          url: "http://localhost:3000",
+          name: "instantly"
+        }, function (details) {
+          console.log('Cookie removed: ', details);
+        });
+
+        chrome.cookies.remove({
+          url: "http://localhost:3000",
+          name: "userId"
+        }, function (details) {
+          console.log('Cookie removed: ', details);
+        });
+
         chrome.cookies.set({
           url: "http://localhost:3000",
           name: "smartlead",
-          value: message.localStorage,
+          // @ts-ignore
+          value: smartlead.cookie,
+        })
+
+        chrome.cookies.set({
+          url: "http://localhost:3000",
+          name: "userId",
+          // @ts-ignore
+          value: smartlead.userId,
         })
 
         sendResponse('smartlead');
@@ -35,14 +57,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         await chrome.cookies.getAll({ url }, function (cookies) {
           const filterCookies = cookies.find(cookie => cookie.name === '__session')
 
-          console.log(cookies);
-          // cookies.map((cookie) => {
+          chrome.cookies.remove({
+            url: "http://localhost:3000",
+            name: "smartlead"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
+          chrome.cookies.remove({
+            url: "http://localhost:3000",
+            name: "userId"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
           chrome.cookies.set({
             url: "http://localhost:3000",
             name: "instantly",
             value: filterCookies.value,
           })
-          // })
 
           sendResponse(allCookies);
         });
@@ -75,12 +108,32 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       var url = tab.url;
 
       if (platform === "sm") {
-        console.log({ smartlead });
+        chrome.cookies.remove({
+          url: "http://localhost:3000",
+          name: "instantly"
+        }, function (details) {
+          console.log('Cookie removed: ', details);
+        });
+
+        chrome.cookies.remove({
+          url: "http://localhost:3000",
+          name: "userId"
+        }, function (details) {
+          console.log('Cookie removed: ', details);
+        });
+
         chrome.cookies.set({
           url: "http://localhost:3000",
           name: "smartlead",
           // @ts-ignore
-          value: smartlead,
+          value: smartlead.cookie,
+        })
+
+        chrome.cookies.set({
+          url: "http://localhost:3000",
+          name: "userId",
+          // @ts-ignore
+          value: smartlead.userId,
         })
 
         sendResponse(smartlead);
@@ -88,13 +141,31 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         await chrome.cookies.getAll({ url }, function (cookies) {
           const filterCookies = cookies.find(cookie => cookie.name === '__session')
 
-          console.log(cookies);
-          // cookies.map((cookie) => {
+          chrome.cookies.remove({
+            url: "http://localhost:3000",
+            name: "smartlead"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
+          chrome.cookies.remove({
+            url: "http://localhost:3000",
+            name: "userId"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
           chrome.cookies.set({
             url: "http://localhost:3000",
             name: "instantly",
             value: filterCookies.value,
           })
+
+          // chrome.cookies.set({
+          //   url: "http://localhost:3000",
+          //   name: "userId",
+          //   // @ts-ignore
+          //   value: smartlead.userId,
           // })
 
           sendResponse(allCookies);

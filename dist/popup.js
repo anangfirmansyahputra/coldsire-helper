@@ -215,11 +215,13 @@ function Popup() {
         chrome.runtime.sendMessage({ action: "fromPopup", platform: "sm" }, (data) => {
             chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" });
         });
+        window.close();
     };
     const handleInstantly = () => {
         chrome.runtime.sendMessage({ action: "fromPopup", platform: "in" }, (data) => {
             chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" });
         });
+        window.close();
     };
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
         chrome.runtime.sendMessage({ action: "getCookies", url: "https://www.coldsire.com/" }, (cookies) => {

@@ -18,12 +18,14 @@ export default function Popup() {
     chrome.runtime.sendMessage({ action: "fromPopup", platform: "sm" }, (data) => {
       chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" })
     })
+    window.close();
   }
 
   const handleInstantly = () => {
     chrome.runtime.sendMessage({ action: "fromPopup", platform: "in" }, (data) => {
       chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" })
     })
+    window.close();
   }
 
   useEffect(() => {

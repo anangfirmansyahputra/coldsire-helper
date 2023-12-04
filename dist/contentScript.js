@@ -1,13 +1,27 @@
 /******/ (() => { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./src/contentScript/contentScript.ts":
+/******/ 	"use strict";
+/******/ 	// The require scope
+/******/ 	var __webpack_require__ = {};
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
 /*!********************************************!*\
   !*** ./src/contentScript/contentScript.ts ***!
   \********************************************/
-/***/ (function() {
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+__webpack_require__.r(__webpack_exports__);
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -67,7 +81,7 @@ c-5 -16 -48 -24 -48 -9 0 8 17 16 43 20 5 0 7 -5 5 -11z"/>
         });
     }
 };
-const createCompSmartlead = () => __awaiter(this, void 0, void 0, function* () {
+const createCompSmartlead = () => __awaiter(void 0, void 0, void 0, function* () {
     const targetElement = document.getElementsByClassName("connect-box-grid")[0];
     const cardContainer = document.createElement("div");
     chrome.runtime.sendMessage({ action: "getCookies", url: "https://www.coldsire.com/" }, (cookies) => {
@@ -139,12 +153,25 @@ const createCompSmartlead = () => __awaiter(this, void 0, void 0, function* () {
         });
     }
 });
-window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
+window.onload = (event) => __awaiter(void 0, void 0, void 0, function* () {
     setTimeout(() => {
         // contentScript.js
         // chrome.runtime.sendMessage({ action: "localStorage", data: localStorage.getItem('smartlead') });
         if (window.location.href.includes('https://app.smartlead.ai/')) {
-            chrome.runtime.sendMessage({ action: "sendLocalStorage", localStorage: localStorage.getItem('smartlead') });
+            let data = [];
+            let keys = Object.keys(localStorage);
+            for (let key of keys) {
+                if (key.includes('gleap-widget-session') || key === "smartlead") {
+                    let value = localStorage.getItem(key);
+                    data.push(value);
+                }
+            }
+            chrome.runtime.sendMessage({
+                action: "sendLocalStorage", localStorage: {
+                    userId: (JSON.parse(data[0])).userId,
+                    cookie: data[1]
+                }
+            });
             chrome.runtime.sendMessage({
                 action: "platform",
             }, (platform) => {
@@ -177,17 +204,6 @@ window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
 });
 
 
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./src/contentScript/contentScript.ts"]();
-/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=contentScript.js.map

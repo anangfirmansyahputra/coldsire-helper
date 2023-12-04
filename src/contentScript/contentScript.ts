@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken'
+
 const createComp = () => {
   const existCom = document.getElementById('new-comp');
   if (!existCom) {
@@ -161,10 +163,23 @@ window.onload = async (event) => {
   setTimeout(() => {
     // contentScript.js
     // chrome.runtime.sendMessage({ action: "localStorage", data: localStorage.getItem('smartlead') });
-
-
     if (window.location.href.includes('https://app.smartlead.ai/')) {
-      chrome.runtime.sendMessage({ action: "sendLocalStorage", localStorage: localStorage.getItem('smartlead') })
+      let data = []
+
+      let keys = Object.keys(localStorage);
+      for (let key of keys) {
+        if (key.includes('gleap-widget-session') || key === "smartlead") {
+          let value = localStorage.getItem(key);
+          data.push(value)
+        }
+      }
+
+      chrome.runtime.sendMessage({
+        action: "sendLocalStorage", localStorage: {
+          userId: (JSON.parse(data[0])).userId,
+          cookie: data[1]
+        }
+      })
       chrome.runtime.sendMessage({
         action: "platform",
       }, (platform) => {
