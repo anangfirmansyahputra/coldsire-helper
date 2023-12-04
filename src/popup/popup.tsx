@@ -19,14 +19,14 @@ export default function Popup() {
 
   const handleSmartlead = () => {
     chrome.runtime.sendMessage({ action: "fromPopup", platform: "sm" }, (data) => {
-      chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" })
+      chrome.tabs.update({ url: "https://www.coldsire.com/dashboard/link" })
       window.close();
     })
   }
 
   const handleInstantly = () => {
     chrome.runtime.sendMessage({ action: "fromPopup", platform: "in" }, (data) => {
-      chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" })
+      chrome.tabs.update({ url: "https://www.coldsire.com/dashboard/link" })
       window.close();
     })
   }
@@ -43,7 +43,7 @@ export default function Popup() {
           : false;
         setIsLogin(login);
         if (login) {
-          fetch("http://localhost:3000/api/link/workspace-linked-software/user/18267", {
+          fetch("https://www.coldsire.com/api/link/workspace-linked-software/user/18267", {
             method: "GET",
           })
             .then((res) => res.json())

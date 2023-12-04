@@ -39,25 +39,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 if (url === "https://app.smartlead.ai/app/email-accounts") {
                     console.log('smartlead');
                     chrome.cookies.remove({
-                        url: "http://localhost:3000",
+                        url: "https://www.coldsire.com",
                         name: "instantly"
                     }, function (details) {
                         console.log('Cookie removed: ', details);
                     });
                     chrome.cookies.remove({
-                        url: "http://localhost:3000",
+                        url: "https://www.coldsire.com",
                         name: "userId"
                     }, function (details) {
                         console.log('Cookie removed: ', details);
                     });
                     chrome.cookies.set({
-                        url: "http://localhost:3000",
+                        url: "https://www.coldsire.com",
                         name: "smartlead",
                         // @ts-ignore
                         value: smartlead.cookie,
                     });
                     chrome.cookies.set({
-                        url: "http://localhost:3000",
+                        url: "https://www.coldsire.com",
                         name: "userId",
                         // @ts-ignore
                         value: smartlead.userId,
@@ -68,19 +68,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     yield chrome.cookies.getAll({ url }, function (cookies) {
                         const filterCookies = cookies.find(cookie => cookie.name === '__session');
                         chrome.cookies.remove({
-                            url: "http://localhost:3000",
+                            url: "https://www.coldsire.com",
                             name: "smartlead"
                         }, function (details) {
                             console.log('Cookie removed: ', details);
                         });
                         chrome.cookies.remove({
-                            url: "http://localhost:3000",
+                            url: "https://www.coldsire.com",
                             name: "userId"
                         }, function (details) {
                             console.log('Cookie removed: ', details);
                         });
                         chrome.cookies.set({
-                            url: "http://localhost:3000",
+                            url: "https://www.coldsire.com",
                             name: "instantly",
                             value: filterCookies.value,
                         });
@@ -111,25 +111,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 var url = tab.url;
                 if (platform === "sm") {
                     chrome.cookies.remove({
-                        url: "http://localhost:3000",
+                        url: "https://www.coldsire.com",
                         name: "instantly"
                     }, function (details) {
                         console.log('Cookie removed: ', details);
                     });
                     chrome.cookies.remove({
-                        url: "http://localhost:3000",
+                        url: "https://www.coldsire.com",
                         name: "userId"
                     }, function (details) {
                         console.log('Cookie removed: ', details);
                     });
                     chrome.cookies.set({
-                        url: "http://localhost:3000",
+                        url: "https://www.coldsire.com",
                         name: "smartlead",
                         // @ts-ignore
                         value: smartlead.cookie,
                     });
                     chrome.cookies.set({
-                        url: "http://localhost:3000",
+                        url: "https://www.coldsire.com",
                         name: "userId",
                         // @ts-ignore
                         value: smartlead.userId,
@@ -140,28 +140,22 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     yield chrome.cookies.getAll({ url }, function (cookies) {
                         const filterCookies = cookies.find(cookie => cookie.name === '__session');
                         chrome.cookies.remove({
-                            url: "http://localhost:3000",
+                            url: "https://www.coldsire.com",
                             name: "smartlead"
                         }, function (details) {
                             console.log('Cookie removed: ', details);
                         });
                         chrome.cookies.remove({
-                            url: "http://localhost:3000",
+                            url: "https://www.coldsire.com",
                             name: "userId"
                         }, function (details) {
                             console.log('Cookie removed: ', details);
                         });
                         chrome.cookies.set({
-                            url: "http://localhost:3000",
+                            url: "https://www.coldsire.com",
                             name: "instantly",
                             value: filterCookies.value,
                         });
-                        // chrome.cookies.set({
-                        //   url: "http://localhost:3000",
-                        //   name: "userId",
-                        //   // @ts-ignore
-                        //   value: smartlead.userId,
-                        // })
                         sendResponse(allCookies);
                     });
                 }
