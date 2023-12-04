@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken'
-
 const createComp = () => {
   const existCom = document.getElementById('new-comp');
   if (!existCom) {
@@ -158,6 +156,7 @@ const createCompSmartlead = async () => {
   }
 
 }
+
 
 window.onload = async (event) => {
   setTimeout(() => {

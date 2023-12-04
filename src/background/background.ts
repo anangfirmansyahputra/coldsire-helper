@@ -1,4 +1,5 @@
 let smartlead;
+let workspace;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   let allCookies;
