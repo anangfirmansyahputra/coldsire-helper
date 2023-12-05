@@ -64,7 +64,7 @@ export default function Select() {
     };
 
     // @ts-ignore
-    fetch("http://localhost:3000/api/workspaces", requestOptions)
+    fetch("https://coldsire.com/api/workspaces", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
@@ -76,7 +76,7 @@ export default function Select() {
 
   useEffect(() => {
     chrome.runtime.sendMessage(
-      { action: "getCookies", url: "http://localhost:3000/" },
+      { action: "getCookies", url: "https://coldsire.com/" },
       (cookies) => {
         const login = cookies?.find(
           (cookie: any) => cookie.name === "__Secure-next-auth.session-token"
@@ -239,7 +239,7 @@ export default function Select() {
               className="mt-10"
               onClick={() => {
                 chrome.tabs.create({
-                  url: "http://localhost:3000/dashboard",
+                  url: "https://coldsire.com/dashboard",
                 });
                 window.close();
               }}

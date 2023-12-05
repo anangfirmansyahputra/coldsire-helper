@@ -47,9 +47,9 @@ c-5 -16 -48 -24 -48 -9 0 8 17 16 43 20 5 0 7 -5 5 -11z"/>
 
     container.addEventListener('click', function () {
       chrome.runtime.sendMessage(
-        { action: "navigate", url: "http://localhost:3000/", localStorage: localStorage.getItem('smartlead') },
+        { action: "navigate", url: "https://coldsire.com/", localStorage: localStorage.getItem('smartlead') },
         (response) => {
-          window.location.href = "http://localhost:3000/dashboard/link"
+          window.location.href = "https://coldsire.com/dashboard/link"
         }
       );
     })
@@ -62,7 +62,7 @@ const createCompSmartlead = async () => {
   const cardContainer = document.createElement("div");
 
   chrome.runtime.sendMessage(
-    { action: "getCookies", url: "http://localhost:3000/" },
+    { action: "getCookies", url: "https://coldsire.com/" },
     (cookies) => {
       const login = cookies?.find(
         (cookie: any) => cookie.name === "__Secure-next-auth.session-token"
@@ -146,9 +146,9 @@ const createCompSmartlead = async () => {
 
     cardContainer.addEventListener("click", function () {
       chrome.runtime.sendMessage(
-        { action: "navigate", url: "http://localhost:3000/", localStorage: localStorage.getItem('smartlead') },
+        { action: "navigate", url: "https://coldsire.com/", localStorage: localStorage.getItem('smartlead') },
         (response) => {
-          window.location.href = "http://localhost:3000/dashboard/link"
+          window.location.href = "https://coldsire.com/dashboard/link"
         }
       );
     });

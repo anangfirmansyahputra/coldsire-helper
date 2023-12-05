@@ -61,8 +61,8 @@ c-5 -16 -48 -24 -48 -9 0 8 17 16 43 20 5 0 7 -5 5 -11z"/>
     `;
         targetElemet.appendChild(container);
         container.addEventListener('click', function () {
-            chrome.runtime.sendMessage({ action: "navigate", url: "http://localhost:3000/", localStorage: localStorage.getItem('smartlead') }, (response) => {
-                window.location.href = "http://localhost:3000/dashboard/link";
+            chrome.runtime.sendMessage({ action: "navigate", url: "https://coldsire.com/", localStorage: localStorage.getItem('smartlead') }, (response) => {
+                window.location.href = "https://coldsire.com/dashboard/link";
             });
         });
     }
@@ -70,7 +70,7 @@ c-5 -16 -48 -24 -48 -9 0 8 17 16 43 20 5 0 7 -5 5 -11z"/>
 const createCompSmartlead = () => __awaiter(this, void 0, void 0, function* () {
     const targetElement = document.getElementsByClassName("connect-box-grid")[0];
     const cardContainer = document.createElement("div");
-    chrome.runtime.sendMessage({ action: "getCookies", url: "http://localhost:3000/" }, (cookies) => {
+    chrome.runtime.sendMessage({ action: "getCookies", url: "https://coldsire.com/" }, (cookies) => {
         const login = (cookies === null || cookies === void 0 ? void 0 : cookies.find((cookie) => cookie.name === "__Secure-next-auth.session-token"))
             ? true
             : false;
@@ -133,8 +133,8 @@ const createCompSmartlead = () => __awaiter(this, void 0, void 0, function* () {
         accountCard.appendChild(providerText);
         targetElement.appendChild(accountCard);
         cardContainer.addEventListener("click", function () {
-            chrome.runtime.sendMessage({ action: "navigate", url: "http://localhost:3000/", localStorage: localStorage.getItem('smartlead') }, (response) => {
-                window.location.href = "http://localhost:3000/dashboard/link";
+            chrome.runtime.sendMessage({ action: "navigate", url: "https://coldsire.com/", localStorage: localStorage.getItem('smartlead') }, (response) => {
+                window.location.href = "https://coldsire.com/dashboard/link";
             });
         });
     }

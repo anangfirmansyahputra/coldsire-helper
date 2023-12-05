@@ -19,14 +19,14 @@ export default function Popup() {
 
   const handleSmartlead = () => {
     chrome.runtime.sendMessage({ action: "fromPopup", platform: "sm" }, (data) => {
-      chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" })
+      chrome.tabs.update({ url: "https://coldsire.com/dashboard/link" })
       window.close();
     })
   }
 
   const handleInstantly = () => {
     chrome.runtime.sendMessage({ action: "fromPopup", platform: "in" }, (data) => {
-      chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" })
+      chrome.tabs.update({ url: "https://coldsire.com/dashboard/link" })
       window.close();
     })
   }
@@ -34,7 +34,7 @@ export default function Popup() {
   useEffect(() => {
     setLoading(true)
     chrome.runtime.sendMessage(
-      { action: "getCookies", url: "http://localhost:3000/" },
+      { action: "getCookies", url: "https://coldsire.com/" },
       async (cookies) => {
         const login = cookies?.find(
           (cookie: any) => cookie.name.includes("next-auth.session-token")
@@ -46,7 +46,7 @@ export default function Popup() {
           try {
             chrome.runtime.sendMessage({ action: "getUser" }, async (userId) => {
               if (userId) {
-                const res = await fetch(`http://localhost:3000/api/link/workspace-linked-software/user/${userId}`, {
+                const res = await fetch(`https://coldsire.com/api/link/workspace-linked-software/user/${userId}`, {
                   method: "GET",
                 });
                 const json = await res.json();
@@ -257,7 +257,7 @@ c-5 -16 -48 -24 -48 -9 0 8 17 16 43 20 5 0 7 -5 5 -11z"/>
         <Button
           className="mt-10"
           onClick={() => {
-            chrome.tabs.update({ url: "http://localhost:3000/dashboard" });
+            chrome.tabs.update({ url: "https://coldsire.com/dashboard" });
             window.close();
           }}
         >

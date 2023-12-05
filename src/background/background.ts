@@ -4,7 +4,7 @@ let href;
 let userId;
 let storage;
 
-const path = "http://localhost:3000/"
+const path = "https://coldsire.com/"
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   let allCookies;

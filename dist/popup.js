@@ -261,19 +261,19 @@ function Popup() {
     };
     const handleSmartlead = () => {
         chrome.runtime.sendMessage({ action: "fromPopup", platform: "sm" }, (data) => {
-            chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" });
+            chrome.tabs.update({ url: "https://coldsire.com/dashboard/link" });
             window.close();
         });
     };
     const handleInstantly = () => {
         chrome.runtime.sendMessage({ action: "fromPopup", platform: "in" }, (data) => {
-            chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" });
+            chrome.tabs.update({ url: "https://coldsire.com/dashboard/link" });
             window.close();
         });
     };
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
         setLoading(true);
-        chrome.runtime.sendMessage({ action: "getCookies", url: "http://localhost:3000/" }, (cookies) => __awaiter(this, void 0, void 0, function* () {
+        chrome.runtime.sendMessage({ action: "getCookies", url: "https://coldsire.com/" }, (cookies) => __awaiter(this, void 0, void 0, function* () {
             const login = (cookies === null || cookies === void 0 ? void 0 : cookies.find((cookie) => cookie.name.includes("next-auth.session-token")))
                 ? true
                 : false;
@@ -282,7 +282,7 @@ function Popup() {
                 try {
                     chrome.runtime.sendMessage({ action: "getUser" }, (userId) => __awaiter(this, void 0, void 0, function* () {
                         if (userId) {
-                            const res = yield fetch(`http://localhost:3000/api/link/workspace-linked-software/user/${userId}`, {
+                            const res = yield fetch(`https://coldsire.com/api/link/workspace-linked-software/user/${userId}`, {
                                 method: "GET",
                             });
                             const json = yield res.json();
@@ -359,7 +359,7 @@ function Popup() {
                 whichPlatform === null && (react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null,
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_button__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "secondary", onClick: () => handleNavigate("https://app.instantly.ai/app/accounts") }, "I use Instantly.ai"),
                     react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_button__WEBPACK_IMPORTED_MODULE_1__.Button, { variant: "secondary", onClick: () => handleNavigate("https://app.smartlead.ai/app/email-accounts") }, "I use smartlead.ai"))))) : (react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_ui_button__WEBPACK_IMPORTED_MODULE_1__.Button, { className: "mt-10", onClick: () => {
-                chrome.tabs.update({ url: "http://localhost:3000/dashboard" });
+                chrome.tabs.update({ url: "https://coldsire.com/dashboard" });
                 window.close();
             } }, "Login to ColdSire"))));
 }
