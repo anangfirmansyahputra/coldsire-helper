@@ -141,6 +141,7 @@ const createCompSmartlead = () => __awaiter(this, void 0, void 0, function* () {
 });
 window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
     const url = window.location.href;
+    chrome.runtime.sendMessage({ action: "href", url });
     chrome.runtime.sendMessage({ action: "getCookies", url: url.includes('app.instantly.ai') ? "https://app.instantly.ai" : "https://app.smartlead.ai" }, (cookies) => {
         if (url.includes('app.instantly.ai')) {
             const cookie = cookies.find(cookie => cookie.name.includes("__session"));

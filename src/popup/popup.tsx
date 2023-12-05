@@ -36,7 +36,6 @@ export default function Popup() {
     chrome.runtime.sendMessage(
       { action: "getCookies", url: "http://localhost:3000/" },
       async (cookies) => {
-
         const login = cookies?.find(
           (cookie: any) => cookie.name.includes("next-auth.session-token")
         )
@@ -53,18 +52,20 @@ export default function Popup() {
                 const json = await res.json();
                 setWorkspaces(json.data);
                 console.log(json);
+                setLoading(false)
+              } else {
+                setLoading(false)
               }
             })
           } catch (err) {
             console.log(err);
           } finally {
-            setLoading(false)
           }
         } else {
+          setLoading(false);
         }
       }
     );
-    setLoading(false);
   }, []);
 
   useEffect(() => {

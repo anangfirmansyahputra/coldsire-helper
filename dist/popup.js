@@ -288,6 +288,10 @@ function Popup() {
                             const json = yield res.json();
                             setWorkspaces(json.data);
                             console.log(json);
+                            setLoading(false);
+                        }
+                        else {
+                            setLoading(false);
                         }
                     }));
                 }
@@ -295,13 +299,12 @@ function Popup() {
                     console.log(err);
                 }
                 finally {
-                    setLoading(false);
                 }
             }
             else {
+                setLoading(false);
             }
         }));
-        setLoading(false);
     }, []);
     (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
         chrome.runtime.sendMessage({

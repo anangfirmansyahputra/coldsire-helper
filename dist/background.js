@@ -170,6 +170,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "getUser") {
         sendResponse(userId);
     }
+    if (message.action === "href") {
+        href = message.url;
+    }
+    if (message.action === "sendHref") {
+        sendResponse(href);
+    }
     return true;
 });
 
