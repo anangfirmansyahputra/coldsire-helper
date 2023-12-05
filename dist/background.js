@@ -18,6 +18,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 let smartlead;
 let workspace;
+let href;
+let userId;
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     let allCookies;
     if (message.action === "getCookies") {
@@ -39,25 +41,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 if (url === "https://app.smartlead.ai/app/email-accounts") {
                     console.log('smartlead');
                     chrome.cookies.remove({
-                        url: "https://www.coldsire.com",
+                        url: "http://localhost:3000/",
                         name: "instantly"
                     }, function (details) {
                         console.log('Cookie removed: ', details);
                     });
                     chrome.cookies.remove({
-                        url: "https://www.coldsire.com",
+                        url: "http://localhost:3000/",
                         name: "userId"
                     }, function (details) {
                         console.log('Cookie removed: ', details);
                     });
                     chrome.cookies.set({
-                        url: "https://www.coldsire.com",
+                        url: "http://localhost:3000/",
                         name: "smartlead",
                         // @ts-ignore
                         value: smartlead.cookie,
                     });
                     chrome.cookies.set({
-                        url: "https://www.coldsire.com",
+                        url: "http://localhost:3000/",
                         name: "userId",
                         // @ts-ignore
                         value: smartlead.userId,
@@ -68,19 +70,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     yield chrome.cookies.getAll({ url }, function (cookies) {
                         const filterCookies = cookies.find(cookie => cookie.name === '__session');
                         chrome.cookies.remove({
-                            url: "https://www.coldsire.com",
+                            url: "http://localhost:3000/",
                             name: "smartlead"
                         }, function (details) {
                             console.log('Cookie removed: ', details);
                         });
                         chrome.cookies.remove({
-                            url: "https://www.coldsire.com",
+                            url: "http://localhost:3000/",
                             name: "userId"
                         }, function (details) {
                             console.log('Cookie removed: ', details);
                         });
                         chrome.cookies.set({
-                            url: "https://www.coldsire.com",
+                            url: "http://localhost:3000/",
                             name: "instantly",
                             value: filterCookies.value,
                         });
@@ -111,25 +113,25 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 var url = tab.url;
                 if (platform === "sm") {
                     chrome.cookies.remove({
-                        url: "https://www.coldsire.com",
+                        url: "http://localhost:3000/",
                         name: "instantly"
                     }, function (details) {
                         console.log('Cookie removed: ', details);
                     });
                     chrome.cookies.remove({
-                        url: "https://www.coldsire.com",
+                        url: "http://localhost:3000/",
                         name: "userId"
                     }, function (details) {
                         console.log('Cookie removed: ', details);
                     });
                     chrome.cookies.set({
-                        url: "https://www.coldsire.com",
+                        url: "http://localhost:3000/",
                         name: "smartlead",
                         // @ts-ignore
                         value: smartlead.cookie,
                     });
                     chrome.cookies.set({
-                        url: "https://www.coldsire.com",
+                        url: "http://localhost:3000/",
                         name: "userId",
                         // @ts-ignore
                         value: smartlead.userId,
@@ -140,19 +142,19 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     yield chrome.cookies.getAll({ url }, function (cookies) {
                         const filterCookies = cookies.find(cookie => cookie.name === '__session');
                         chrome.cookies.remove({
-                            url: "https://www.coldsire.com",
+                            url: "http://localhost:3000/",
                             name: "smartlead"
                         }, function (details) {
                             console.log('Cookie removed: ', details);
                         });
                         chrome.cookies.remove({
-                            url: "https://www.coldsire.com",
+                            url: "http://localhost:3000/",
                             name: "userId"
                         }, function (details) {
                             console.log('Cookie removed: ', details);
                         });
                         chrome.cookies.set({
-                            url: "https://www.coldsire.com",
+                            url: "http://localhost:3000/",
                             name: "instantly",
                             value: filterCookies.value,
                         });
@@ -161,6 +163,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 }
             });
         });
+    }
+    if (message.action === "sendUser") {
+        userId = message.data;
+    }
+    if (message.action === "getUser") {
+        sendResponse(userId);
     }
     return true;
 });

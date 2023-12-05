@@ -64,7 +64,7 @@ export default function Select() {
     };
 
     // @ts-ignore
-    fetch("https://www.coldsire.com/api/workspaces", requestOptions)
+    fetch("http://localhost:3000/api/workspaces", requestOptions)
       .then((response) => response.json())
       .then((data) => {
         // Handle the response data
@@ -76,7 +76,7 @@ export default function Select() {
 
   useEffect(() => {
     chrome.runtime.sendMessage(
-      { action: "getCookies", url: "https://www.coldsire.com/" },
+      { action: "getCookies", url: "http://localhost:3000/" },
       (cookies) => {
         const login = cookies?.find(
           (cookie: any) => cookie.name === "__Secure-next-auth.session-token"
@@ -190,8 +190,8 @@ export default function Select() {
                   >
                     {value
                       ? frameworks.find(
-                          (framework) => framework.value === value
-                        )?.label
+                        (framework) => framework.value === value
+                      )?.label
                       : "Select framework..."}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                   </Button>
@@ -239,7 +239,7 @@ export default function Select() {
               className="mt-10"
               onClick={() => {
                 chrome.tabs.create({
-                  url: "https://www.coldsire.com/dashboard",
+                  url: "http://localhost:3000/dashboard",
                 });
                 window.close();
               }}

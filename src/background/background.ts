@@ -1,5 +1,7 @@
 let smartlead;
 let workspace;
+let href;
+let userId;
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   let allCookies;
@@ -26,28 +28,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log('smartlead');
 
         chrome.cookies.remove({
-          url: "https://www.coldsire.com",
+          url: "http://localhost:3000/",
           name: "instantly"
         }, function (details) {
           console.log('Cookie removed: ', details);
         });
 
         chrome.cookies.remove({
-          url: "https://www.coldsire.com",
+          url: "http://localhost:3000/",
           name: "userId"
         }, function (details) {
           console.log('Cookie removed: ', details);
         });
 
         chrome.cookies.set({
-          url: "https://www.coldsire.com",
+          url: "http://localhost:3000/",
           name: "smartlead",
           // @ts-ignore
           value: smartlead.cookie,
         })
 
         chrome.cookies.set({
-          url: "https://www.coldsire.com",
+          url: "http://localhost:3000/",
           name: "userId",
           // @ts-ignore
           value: smartlead.userId,
@@ -59,21 +61,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           const filterCookies = cookies.find(cookie => cookie.name === '__session')
 
           chrome.cookies.remove({
-            url: "https://www.coldsire.com",
+            url: "http://localhost:3000/",
             name: "smartlead"
           }, function (details) {
             console.log('Cookie removed: ', details);
           });
 
           chrome.cookies.remove({
-            url: "https://www.coldsire.com",
+            url: "http://localhost:3000/",
             name: "userId"
           }, function (details) {
             console.log('Cookie removed: ', details);
           });
 
           chrome.cookies.set({
-            url: "https://www.coldsire.com",
+            url: "http://localhost:3000/",
             name: "instantly",
             value: filterCookies.value,
           })
@@ -110,28 +112,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
       if (platform === "sm") {
         chrome.cookies.remove({
-          url: "https://www.coldsire.com",
+          url: "http://localhost:3000/",
           name: "instantly"
         }, function (details) {
           console.log('Cookie removed: ', details);
         });
 
         chrome.cookies.remove({
-          url: "https://www.coldsire.com",
+          url: "http://localhost:3000/",
           name: "userId"
         }, function (details) {
           console.log('Cookie removed: ', details);
         });
 
         chrome.cookies.set({
-          url: "https://www.coldsire.com",
+          url: "http://localhost:3000/",
           name: "smartlead",
           // @ts-ignore
           value: smartlead.cookie,
         })
 
         chrome.cookies.set({
-          url: "https://www.coldsire.com",
+          url: "http://localhost:3000/",
           name: "userId",
           // @ts-ignore
           value: smartlead.userId,
@@ -143,21 +145,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
           const filterCookies = cookies.find(cookie => cookie.name === '__session')
 
           chrome.cookies.remove({
-            url: "https://www.coldsire.com",
+            url: "http://localhost:3000/",
             name: "smartlead"
           }, function (details) {
             console.log('Cookie removed: ', details);
           });
 
           chrome.cookies.remove({
-            url: "https://www.coldsire.com",
+            url: "http://localhost:3000/",
             name: "userId"
           }, function (details) {
             console.log('Cookie removed: ', details);
           });
 
           chrome.cookies.set({
-            url: "https://www.coldsire.com",
+            url: "http://localhost:3000/",
             name: "instantly",
             value: filterCookies.value,
           })
@@ -167,6 +169,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     });
   }
+
+  if (message.action === "sendUser") {
+    userId = message.data
+  }
+
+  if (message.action === "getUser") {
+    sendResponse(userId)
+  }
+
 
   return true;
 });

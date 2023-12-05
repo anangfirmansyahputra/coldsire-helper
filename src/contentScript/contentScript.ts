@@ -47,9 +47,9 @@ c-5 -16 -48 -24 -48 -9 0 8 17 16 43 20 5 0 7 -5 5 -11z"/>
 
     container.addEventListener('click', function () {
       chrome.runtime.sendMessage(
-        { action: "navigate", url: "https://www.coldsire.com", localStorage: localStorage.getItem('smartlead') },
+        { action: "navigate", url: "http://localhost:3000/", localStorage: localStorage.getItem('smartlead') },
         (response) => {
-          window.location.href = "https://www.coldsire.com/dashboard/link"
+          window.location.href = "http://localhost:3000/dashboard/link"
         }
       );
     })
@@ -62,7 +62,7 @@ const createCompSmartlead = async () => {
   const cardContainer = document.createElement("div");
 
   chrome.runtime.sendMessage(
-    { action: "getCookies", url: "https://www.coldsire.com/" },
+    { action: "getCookies", url: "http://localhost:3000/" },
     (cookies) => {
       const login = cookies?.find(
         (cookie: any) => cookie.name === "__Secure-next-auth.session-token"
@@ -146,9 +146,9 @@ const createCompSmartlead = async () => {
 
     cardContainer.addEventListener("click", function () {
       chrome.runtime.sendMessage(
-        { action: "navigate", url: "https://www.coldsire.com", localStorage: localStorage.getItem('smartlead') },
+        { action: "navigate", url: "http://localhost:3000/", localStorage: localStorage.getItem('smartlead') },
         (response) => {
-          window.location.href = "https://www.coldsire.com/dashboard/link"
+          window.location.href = "http://localhost:3000/dashboard/link"
         }
       );
     });
@@ -159,9 +159,40 @@ const createCompSmartlead = async () => {
 
 
 window.onload = async (event) => {
+  const url = window.location.href
+
+  chrome.runtime.sendMessage({ action: "getCookies", url: url.includes('app.instantly.ai') ? "https://app.instantly.ai" : "https://app.smartlead.ai" }, (cookies) => {
+
+    if (url.includes('app.instantly.ai')) {
+      const cookie = cookies.find(cookie => cookie.name.includes("__session"))
+
+      const [, payloadBase64] = cookie.value.split('.');
+      let tokenConverted = JSON.parse(atob(payloadBase64));
+
+      chrome.runtime.sendMessage({ action: "sendUser", data: tokenConverted.user_id })
+    }
+
+    if (url.includes('app.smartlead.ai')) {
+      let data = []
+
+      let keys = Object.keys(localStorage);
+      for (let key of keys) {
+        if (key.includes('gleap-widget-session') || key === "smartlead") {
+          let value = localStorage.getItem(key);
+          data.push(value)
+        }
+      }
+
+      const token = JSON.parse(data[0])
+
+      chrome.runtime.sendMessage({ action: "sendUser", data: token.userId })
+
+      // chrome.runtime.sendMessage({ action: "sendUser", data: tokenConverted.user_id })
+    }
+  })
+
   setTimeout(() => {
     // contentScript.js
-    // chrome.runtime.sendMessage({ action: "localStorage", data: localStorage.getItem('smartlead') });
     if (window.location.href.includes('https://app.smartlead.ai/')) {
       let data = []
 

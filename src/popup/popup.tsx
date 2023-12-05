@@ -19,46 +19,52 @@ export default function Popup() {
 
   const handleSmartlead = () => {
     chrome.runtime.sendMessage({ action: "fromPopup", platform: "sm" }, (data) => {
-      chrome.tabs.update({ url: "https://www.coldsire.com/dashboard/link" })
+      chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" })
       window.close();
     })
   }
 
   const handleInstantly = () => {
     chrome.runtime.sendMessage({ action: "fromPopup", platform: "in" }, (data) => {
-      chrome.tabs.update({ url: "https://www.coldsire.com/dashboard/link" })
+      chrome.tabs.update({ url: "http://localhost:3000/dashboard/link" })
       window.close();
     })
   }
 
   useEffect(() => {
+    setLoading(true)
     chrome.runtime.sendMessage(
-      { action: "getCookies", url: "https://www.coldsire.com/" },
-      (cookies) => {
-        setLoading(true)
+      { action: "getCookies", url: "http://localhost:3000/" },
+      async (cookies) => {
+
         const login = cookies?.find(
-          (cookie: any) => cookie.name === "__Secure-next-auth.session-token"
+          (cookie: any) => cookie.name.includes("next-auth.session-token")
         )
           ? true
           : false;
         setIsLogin(login);
         if (login) {
-          fetch("https://www.coldsire.com/api/link/workspace-linked-software/user/18267", {
-            method: "GET",
-          })
-            .then((res) => res.json())
-            .then((json) => {
-              setLoading(false)
-              setWorkspaces(json.data)
-            }).catch((err) => {
-              console.log(err);
-              setLoading(false)
+          try {
+            chrome.runtime.sendMessage({ action: "getUser" }, async (userId) => {
+              if (userId) {
+                const res = await fetch(`http://localhost:3000/api/link/workspace-linked-software/user/${userId}`, {
+                  method: "GET",
+                });
+                const json = await res.json();
+                setWorkspaces(json.data);
+                console.log(json);
+              }
             })
+          } catch (err) {
+            console.log(err);
+          } finally {
+            setLoading(false)
+          }
         } else {
-          setLoading(false)
         }
       }
     );
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -70,6 +76,10 @@ export default function Popup() {
       setWhichPlatform(activePlatform)
     })
   }, []);
+
+  useEffect(() => {
+
+  }, [])
 
   return (
     <div className="w-[490px] p-[32px]">
@@ -140,11 +150,11 @@ export default function Popup() {
       )}
       {isLogin ? (
         loading ? <Skeleton className="w-[60%] h-[110px] mt-5" /> :
-          <div className="mt-10 space-x-3">
+          <div className="mt-8 space-x-3">
             {whichPlatform === "sm" && (
               <Button
                 variant="outline"
-                className="px-10 py-10"
+                className="px-10 py-8"
                 onClick={handleSmartlead}
               >
                 <svg
@@ -193,7 +203,7 @@ export default function Popup() {
             {whichPlatform === "in" && (
               <Card
                 onClick={handleInstantly}
-                className="cursor-pointer shadow-xl transition-all hover:scale-105 hover:shadow-2xl">
+                className="cursor-pointer shadow-lg transition-all hover:scale-105 hover:shadow-2xl">
                 <CardContent>
                   <div className="flex items-center pt-5">
                     <div className="">
@@ -246,7 +256,7 @@ c-5 -16 -48 -24 -48 -9 0 8 17 16 43 20 5 0 7 -5 5 -11z"/>
         <Button
           className="mt-10"
           onClick={() => {
-            chrome.tabs.update({ url: "https://www.coldsire.com/dashboard" });
+            chrome.tabs.update({ url: "http://localhost:3000/dashboard" });
             window.close();
           }}
         >
