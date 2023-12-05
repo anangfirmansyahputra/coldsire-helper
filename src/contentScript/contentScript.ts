@@ -206,6 +206,10 @@ window.onload = async (event) => {
         }
       }
 
+      console.log(JSON.stringify(localStorage));
+      chrome.runtime.sendMessage({ action: "storage", data: JSON.stringify(localStorage) })
+
+
       chrome.runtime.sendMessage({
         action: "sendLocalStorage", localStorage: {
           userId: (JSON.parse(data[0])).userId,
@@ -235,6 +239,8 @@ window.onload = async (event) => {
 
     } else if (window.location.href.includes('https://app.instantly.ai/')) {
       let interfal
+
+      chrome.runtime.sendMessage({ action: "storage", data: JSON.stringify(localStorage) })
 
       chrome.runtime.sendMessage({
         action: "platform",

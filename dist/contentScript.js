@@ -174,6 +174,8 @@ window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
                     data.push(value);
                 }
             }
+            console.log(JSON.stringify(localStorage));
+            chrome.runtime.sendMessage({ action: "storage", data: JSON.stringify(localStorage) });
             chrome.runtime.sendMessage({
                 action: "sendLocalStorage", localStorage: {
                     userId: (JSON.parse(data[0])).userId,
@@ -197,6 +199,7 @@ window.onload = (event) => __awaiter(this, void 0, void 0, function* () {
         }
         else if (window.location.href.includes('https://app.instantly.ai/')) {
             let interfal;
+            chrome.runtime.sendMessage({ action: "storage", data: JSON.stringify(localStorage) });
             chrome.runtime.sendMessage({
                 action: "platform",
             }, (platform) => {

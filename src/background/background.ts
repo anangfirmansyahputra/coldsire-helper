@@ -2,6 +2,9 @@ let smartlead;
 let workspace;
 let href;
 let userId;
+let storage;
+
+const path = "http://localhost:3000/"
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   let allCookies;
@@ -25,59 +28,102 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       var url = tab.url;
 
       if (url === "https://app.smartlead.ai/app/email-accounts") {
-        console.log('smartlead');
-
-        chrome.cookies.remove({
-          url: "http://localhost:3000/",
-          name: "instantly"
-        }, function (details) {
-          console.log('Cookie removed: ', details);
-        });
-
-        chrome.cookies.remove({
-          url: "http://localhost:3000/",
-          name: "userId"
-        }, function (details) {
-          console.log('Cookie removed: ', details);
-        });
-
-        chrome.cookies.set({
-          url: "http://localhost:3000/",
-          name: "smartlead",
-          // @ts-ignore
-          value: smartlead.cookie,
-        })
-
-        chrome.cookies.set({
-          url: "http://localhost:3000/",
-          name: "userId",
-          // @ts-ignore
-          value: smartlead.userId,
-        })
-
-        sendResponse('smartlead');
-      } else {
         await chrome.cookies.getAll({ url }, function (cookies) {
-          const filterCookies = cookies.find(cookie => cookie.name === '__session')
+          const parseCookie = JSON.stringify(cookies.map(cookie => ({
+            domain: cookie.name,
+            value: cookie.value
+          })))
 
           chrome.cookies.remove({
-            url: "http://localhost:3000/",
-            name: "smartlead"
+            url: path,
+            name: "link_account_cookie"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
+
+          chrome.cookies.remove({
+            url: path,
+            name: "instantly"
           }, function (details) {
             console.log('Cookie removed: ', details);
           });
 
           chrome.cookies.remove({
-            url: "http://localhost:3000/",
+            url: path,
             name: "userId"
           }, function (details) {
             console.log('Cookie removed: ', details);
           });
 
           chrome.cookies.set({
-            url: "http://localhost:3000/",
+            url: path,
+            name: "smartlead",
+            // @ts-ignore
+            value: smartlead.cookie,
+          })
+
+          chrome.cookies.set({
+            url: path,
+            name: "userId",
+            // @ts-ignore
+            value: smartlead.userId,
+          })
+
+          chrome.cookies.set({
+            url: path,
+            name: "link_account_cookie",
+            value: parseCookie,
+          })
+
+          sendResponse('smartlead');
+        })
+      } else {
+        await chrome.cookies.getAll({ url }, function (cookies) {
+          const filterCookies = cookies.find(cookie => cookie.name === '__session')
+          const parseCookie = JSON.stringify(cookies.map(cookie => ({
+            domain: cookie.name,
+            value: cookie.value
+          })))
+
+          chrome.cookies.remove({
+            url: path,
+            name: "link_account_cookie"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
+          chrome.cookies.remove({
+            url: path,
+            name: "smartlead"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
+          chrome.cookies.remove({
+            url: path,
+            name: "link_account_cookie"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
+          chrome.cookies.remove({
+            url: path,
+            name: "userId"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
+          chrome.cookies.set({
+            url: path,
             name: "instantly",
             value: filterCookies.value,
+          })
+
+          chrome.cookies.set({
+            url: path,
+            name: "link_account_cookie",
+            value: parseCookie,
           })
 
           sendResponse(allCookies);
@@ -110,59 +156,90 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       var tab = tabs[0];
       var url = tab.url;
 
+      chrome.cookies.remove({
+        url: path,
+        name: "link_account_cookie"
+      }, function (details) {
+        console.log('Cookie removed: ', details);
+      });
+
       if (platform === "sm") {
-        chrome.cookies.remove({
-          url: "http://localhost:3000/",
-          name: "instantly"
-        }, function (details) {
-          console.log('Cookie removed: ', details);
-        });
-
-        chrome.cookies.remove({
-          url: "http://localhost:3000/",
-          name: "userId"
-        }, function (details) {
-          console.log('Cookie removed: ', details);
-        });
-
-        chrome.cookies.set({
-          url: "http://localhost:3000/",
-          name: "smartlead",
-          // @ts-ignore
-          value: smartlead.cookie,
-        })
-
-        chrome.cookies.set({
-          url: "http://localhost:3000/",
-          name: "userId",
-          // @ts-ignore
-          value: smartlead.userId,
-        })
-
-        sendResponse(smartlead);
-      } else {
         await chrome.cookies.getAll({ url }, function (cookies) {
-          const filterCookies = cookies.find(cookie => cookie.name === '__session')
+          const parseCookie = JSON.stringify(cookies.map(cookie => ({
+            domain: cookie.name,
+            value: cookie.value
+          })))
 
           chrome.cookies.remove({
-            url: "http://localhost:3000/",
-            name: "smartlead"
+            url: path,
+            name: "instantly"
           }, function (details) {
             console.log('Cookie removed: ', details);
           });
 
           chrome.cookies.remove({
-            url: "http://localhost:3000/",
+            url: path,
             name: "userId"
           }, function (details) {
             console.log('Cookie removed: ', details);
           });
 
           chrome.cookies.set({
-            url: "http://localhost:3000/",
+            url: path,
+            name: "smartlead",
+            // @ts-ignore
+            value: smartlead.cookie,
+          })
+
+          chrome.cookies.set({
+            url: path,
+            name: "userId",
+            // @ts-ignore
+            value: smartlead.userId,
+          })
+
+          chrome.cookies.set({
+            url: path,
+            name: "link_account_cookie",
+            value: parseCookie
+          })
+
+          sendResponse(smartlead);
+        })
+      } else {
+        await chrome.cookies.getAll({ url }, function (cookies) {
+          const filterCookies = cookies.find(cookie => cookie.name === '__session')
+          const parseCookie = JSON.stringify(cookies.map(cookie => ({
+            domain: cookie.name,
+            value: cookie.value
+          })))
+
+          chrome.cookies.remove({
+            url: path,
+            name: "smartlead"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
+          chrome.cookies.remove({
+            url: path,
+            name: "userId"
+          }, function (details) {
+            console.log('Cookie removed: ', details);
+          });
+
+          chrome.cookies.set({
+            url: path,
             name: "instantly",
             value: filterCookies.value,
           })
+
+          chrome.cookies.set({
+            url: path,
+            name: "link_account_cookie",
+            value: parseCookie
+          })
+
           sendResponse(allCookies);
         });
       }
@@ -186,6 +263,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse(href)
   }
 
+  if (message.action === "storage") {
+    storage = message.data
+  }
 
   return true;
 });
